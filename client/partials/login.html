@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="center-form panel">
+            <div class="panel-body">
+                <h2 class="text-center">Login</h2>
+                <form method="post" ng-submit="login()" name="loginForm">
+                    <div class="form-group has-feedback">
+                        <input class="form-control input-lg" type="text" name="email" ng-model="user.email" placeholder="Email" required autofocus> <span class="ion-at form-control-feedback"></span> </div>
+                    <div class="form-group has-feedback">
+                        <input class="form-control input-lg" type="password" name="password" ng-model="user.password" placeholder="Password" required> <span class="ion-key form-control-feedback"></span> </div>
+                    <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-lg  btn-block btn-success">Login</button>
+                    <br/>
+                    <p class="text-center text-muted"> <small>Don't have an account yet? <a href="/#/signup">Sign up</a></small>
+                        <br> <small>Forgot password? <a href="javascript:void(0)" ng-click="forgot()">Recover Password</a></small> </p>
+                    <div class="signup-or-separator">
+                        <h6 class="text">or</h6>
+                        <hr> </div>
+                </form>
+                </br>
+                <button class="btn btn-block btn-facebook" ng-click="authenticate('facebook')"> <i class="ion-social-facebook"></i> Login with Facebook </button>
+                <button class="btn btn-block btn-twitter" ng-click="authenticate('twitter')"> <i class="ion-social-twitter"></i> Login with Twitter </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,402 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+                            <div class="item item-text-wrap" style="text-align: center;  background-color: #223843;">
+                    <div class="row" style="background-color:#223843;">
+                        <div class="col">
+                            <h3 style="color: #FFE939; opacity: 1; font-size: 16px;"><i class="icon ion-android-calendar"></i> Start:</h3>
+                            <p style="color: #f2f2f2; font-size: 13px">{{contest.start | amDateFormat: 'MMMM Mo - dddd, h:mm a'}}</p>
+                        </div>
+                        <div class="col">
+                            <h3 style="color: #FFE939; opacity: 1; font-size: 16px;"><i class="icon ion-android-calendar"></i> End:</h3>
+                            <p style="color: #f2f2f2; font-size: 13px">{{contest.end | amDateFormat: 'MMMM Mo - dddd, h:mm a'}}</p>
+                        </div>
+                    </div>
+                    <div class="list" style="background-color:#223843">
+                        <div class="item item-icon-left item-icon-right" style="color: #f2f2f2; background-color:#223843; border-top: 1px solid grey">
+                            <i class="icon ion-ios-information" style="color: #FFE939; opacity: 1;"></i>
+                            <div style="color: #f2f2f2">League(s) Included: {{contest.tags}}
+                            </div>
+                            <i class="icon ion-ios-information" style="color: #FFE939; opacity: 1;"></i>
+                        </div>
+                        <div class="item item-icon-left item-icon-right" style="color: #f2f2f2; background-color:#223843; border-top: 1px solid grey">
+                            <i class="icon ion-pound" style="color: #FFE939; opacity: 1;"></i>
+                            <div style="color: #f2f2f2">Number of Matchups</div>
+                            <i class="badge badge-custom">{{contest.numberOfMatchups}}</i>
+                            <i class="icon ion-pound" style="color: #FFE939; opacity: 1;"></i>
+                        </div>
+                        <div class="item item-icon-left item-icon-right" style="color: #f2f2f2; background-color: #223843; border-top: 1px solid grey">
+                            <i class="icon ion-ios-people" style="color: #FFE939; opacity: 1;"></i>
+                            <div style="color: #f2f2f2">Number of Users</div>
+                            <i class="badge badge-custom">{{contest.participants}}</i>
+                            <i class="icon ion-ios-people" style="color: #FFE939; opacity: 1;"></i>
+                        </div>
+                        <div ng-if="!showContestLeaderboard">
+                            <a class="item item-icon-left item-icon-right" href="javascript:void(0)" ng-click="showPopup()" style="color: #f2f2f2; background-color: #223843; border-bottom: 1px solid grey; border-top: 1px solid grey">
+                                <i class="icon ion-trophy" style="color: #FFE939; opacity: 1;"></i>
+                                <div style="color: #f2f2f2">Contest Leaderboard</div>
+                                <i class="icon ion-ios-arrow-right" style="color: #FFE939; opacity: 1;"></i>
+                            </a>
+                        </div>
+                        <div ng-if="showContestLeaderboard">
+                            <a class="item item-icon-left item-icon-right" href="javascript:void(0)" ng-click="buttonClicked=true" style="color: #f2f2f2; background-color: #223843; border-bottom: 1px solid grey; border-top: 1px solid grey">
+                            <i class="icon ion-trophy" style="color: #FFE939; opacity: 1;"></i>
+                            <div style="color: #f2f2f2">Contest Leaderboard</div>
+                            <i class="icon ion-ios-arrow-right" style="color: #FFE939; opacity: 1;"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                    <div class="item text-center" style="margin-bottom: 12px">
+                                        <div ng-if="!contestStarted">
+                        <h4 ng-show="madePicks">Your picks are outlined</h4> 
+                    </div>
+                    <div ng-if="contestStarted && !ended">
+                        <h4 ng-show="madePicks">Contest has started, your picks are outlined</h4> </div>
+                    <div ng-show="ended">
+                        <h4>Contest has ended, matchup winners are outlined</h4> </div>
+                    </div>
+                </div>
+            </div>
+                <div class="panel panel-default">
+        <div class="panel-body">
+            <div ng-if="!madePicks">
+                <form name="contestForm" id="contestForm" ng-submit="submitPicks(contestForm.$valid)" novalidate>
+                    <div class="col-xs-12">
+                        <table id="nbateams">
+                            <tr>
+                                <th>Home Team</th>
+                                <th>Away Team</th>
+                                <th>Selected Teams</th>
+                            </tr>
+                            <tr ng-repeat="matchup in contest.matchups">
+                                <td>
+                                    <input type="radio" ng-change="incrementProgress({{matchup.matchupId}})" id="matchup{{matchup.homeTeam}}" name="matchup{{matchup.matchupId}}" ng-model="matchup.selectedTeam" ng-value="matchup.homeTeam" ng-show="!madePicks" required>
+                                    <label for="matchup{{matchup.homeTeam}}">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                    <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedHome}}%</strong> </div>
+                                </td>
+                                <td>
+                                    <input type="radio" ng-change="incrementProgress({{matchup.matchupId}})" id="matchup{{matchup.awayTeam}}" name="matchup{{matchup.matchupId}}" ng-model="matchup.selectedTeam" ng-value="matchup.awayTeam" ng-show="!madePicks" required>
+                                    <label for="matchup{{matchup.awayTeam}}">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                    <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedAway}}%</strong> </div>
+                                </td>
+                                <td>
+                                    <h5>{{matchup.selectedTeam}}</h5> </td>
+                            </tr>
+                        </table>
+                        <div class="panel-footer text-center">
+                            <ul class="list-inline">
+                                <li>
+                                    <button type="submit" ng-disabled="madePicks" class="btn btn-lg btn-default">Submit Picks</button>
+                                </li>
+                                <li>
+                                    <button ng-disabled="!madePicks" ng-click="deletePicks()" class="btn btn-lg btn-danger">Delete Picks</button>
+                                </li>
+                                <li>
+                                    <button ng-disabled="!madePicks" class="btn btn-lg btn-warning">Change Picks</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="{{contest.numberOfMatchups}}" style="width: 0%;"> Pick 0 of {{contest.numberOfMatchups}} made </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div ng-if="madePicks && !contestStarted && !editUserPicks">
+                <div class="col-lg-12">
+                    <table id="madepicks">
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                        </tr>
+                        <tr ng-repeat="matchup in contest.matchups">
+                            <td>
+                                <div ng-show="checkPickSet(matchup.homeTeam) == true">
+                                    <label class="yes">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="checkPickSet(matchup.homeTeam) == false">
+                                    <label class="no">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedHome}}%</strong> </div>
+                            </td>
+                            <td>
+                                <div ng-show="checkPickSet(matchup.awayTeam) == true">
+                                    <label class="yes">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="checkPickSet(matchup.awayTeam) == false">
+                                    <label class="no">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedAway}}%</strong> </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="panel-footer text-center">
+                        <ul class="list-inline">
+                            <li>
+                                <button type="submit" ng-disabled="madePicks" class="btn btn-lg btn-default">Submit Picks</button>
+                            </li>
+                            <li>
+                                <button ng-disabled="!madePicks" ng-click="deletePicks()" class="btn btn-lg btn-danger">Delete Picks</button>
+                            </li>
+                            <li>
+                                <button ng-disabled="!madePicks" ng-click="editPicks()" class="btn btn-lg btn-warning">Change Picks</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="contestStarted && !ended">
+                <div class="col-lg-12">
+                    <table id="madepicks">
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                        </tr>
+                        <tr ng-repeat="matchup in contest.matchups">
+                            <td>
+                                <div ng-show="checkPickSet(matchup.homeTeam) == true">
+                                    <label class="yes">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="checkPickSet(matchup.homeTeam) == false">
+                                    <label class="no">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedHome}}%</strong> </div>
+                            </td>
+                            <td>
+                                <div ng-show="checkPickSet(matchup.awayTeam) == true">
+                                    <label class="yes">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="checkPickSet(matchup.awayTeam) == false">
+                                    <label class="no">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedAway}}%</strong> </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="panel-footer text-center">
+                        <ul class="list-inline">
+                            <li>
+                                <button type="submit" ng-disabled="contestStarted" class="btn btn-lg btn-default">Submit Picks</button>
+                            </li>
+                            <li>
+                                <button ng-disabled="contestStarted" ng-click="deletePicks()" class="btn btn-lg btn-danger">Delete Picks</button>
+                            </li>
+                            <li>
+                                <button ng-disabled="contestStarted" ng-click="editPicks()" class="btn btn-lg btn-warning">Change Picks</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="ended">
+                <div class="col-lg-12">
+                    <table id="madepicks">
+                        <tr>
+                            <th>Home Team</th>
+                            <th>Away Team</th>
+                        </tr>
+                        <tr ng-repeat="matchup in contest.matchups">
+                            <td>
+                                <div ng-show="checkWinnerSet(matchup.homeTeam) == true">
+                                    <label class="yes">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="checkWinnerSet(matchup.homeTeam) == false">
+                                    <label class="no">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedHome}}%</strong> </div>
+                            </td>
+                            <td>
+                                <div ng-show="checkWinnerSet(matchup.awayTeam) == true">
+                                    <label class="yes">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="checkWinnerSet(matchup.awayTeam) == false">
+                                    <label class="no">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </div>
+                                <div ng-show="thereArePicks == true"> <strong>{{matchup.percentPickedAway}}%</strong> </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="panel-footer text-center">
+                        <ul class="list-inline">
+                            <li>
+                                <button type="submit" ng-disabled="contestStarted" class="btn btn-lg btn-default">Submit Picks</button>
+                            </li>
+                            <li>
+                                <button ng-disabled="contestStarted" ng-click="deletePicks()" class="btn btn-lg btn-danger">Delete Picks</button>
+                            </li>
+                            <li>
+                                <button ng-disabled="contestStarted" class="btn btn-lg btn-warning">Change Picks</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="editUserPicks">
+                <div class="col-lg-12">
+                    <h6>Select the winners from the matchups below to update your entry</h6>
+                    <form name="editPickForm">
+                        <table id="nbateams">
+                            <tr>
+                                <th>Home Team</th>
+                                <th>Away Team</th>
+                                <th>Selected Teams</th>
+                            </tr>
+                            <tr ng-repeat="matchup in contest.matchups">
+                                <td>
+                                    <input type="radio" id="matchup{{matchup.homeTeam}}" name="matchup{{matchup.matchupId}}" ng-model="matchup.selectedTeam" ng-value="matchup.homeTeam" ng-show="!madePicks" required>
+                                    <label for="matchup{{matchup.homeTeam}}">{{matchup.homeTeam}}
+                                        <br> <img ng-src="{{matchup.homeLogo}}" width="50" height="50"> </label>
+                                </td>
+                                <td>
+                                    <input type="radio" id="matchup{{matchup.awayTeam}}" name="matchup{{matchup.matchupId}}" ng-model="matchup.selectedTeam" ng-value="matchup.awayTeam" ng-show="!madePicks" required>
+                                    <label for="matchup{{matchup.awayTeam}}">{{matchup.awayTeam}}
+                                        <br> <img ng-src="{{matchup.awayLogo}}" width="50" height="50"> </label>
+                                </td>
+                                <td>
+                                    <h5>{{matchup.selectedTeam}}</h5> </td>
+                            </tr>
+                        </table>
+                    </form>
+                        <div class="panel-footer text-center">
+                            <ul class="list-inline">
+                                <li>
+                                    <button ng-click="submitEditPicks()" class="btn btn-lg btn-default">Change Entry</button>
+                                </li>
+                                <li>
+                                    <button ng-click="cancelEditPicks()" class="btn btn-lg btn-danger">Cancel</button>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer text-center">
+            <button ng-click="buttonClicked=true" ng-disabled="!showContestLeaderboard" ng-hide="buttonClicked==true" class="btn btn-info"> Show Contest Leaderboard</button>
+            <div ng-show="!showContestLeaderboard">
+                <h5 text-align="center">Leaderboard not viewable until contest starts</h5> </div>
+            <div ng-show="buttonClicked==true">
+                <button ng-click="buttonClicked=false" class="btn btn-warning"> Hide Contest Leaderboard</button>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="buttonClicked==true && isNotEnded==false">
+        <div class="panel panel-default">
+            <div class="panel-heading">Contest Leaderboard</div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <table id="contestHistory">
+                        <tr>
+                            <th>User</th>
+                            <th>Picks</th>
+                            <th>Points</th>
+                            <th>Rank</th>
+                        </tr>
+                        <tr ng-repeat="pick in contest.picks | orderBy:'-contestPoints'">
+                            <td> {{pick.user.displayName}} </td>
+                            <td> {{pick.selectedTeams}} </td>
+                            <td> {{pick.contestPoints}} </td>
+                            <td> {{pick.contestRank}} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="buttonClicked==true && isNotEnded==true">
+        <div class="panel panel-default">
+            <div class="panel-heading">Contest Leaderboard</div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <table id="contestHistory">
+                        <tr>
+                            <th>User</th>
+                            <th>Picks</th>
+                            <th>Points</th>
+                            <th>Rank</th>
+                        </tr>
+                        <tr ng-repeat="pick in contest.picks | orderBy:'-contestPoints'">
+                            <td> {{pick.user.displayName}} </td>
+                            <td> {{pick.selectedTeams}} </td>
+                            <td> {{pick.contestPoints}} </td>
+                            <td> {{pick.contestRank}} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-ios-people"></i> Comments: {{contest.posts.length}}</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="media">
+                        <h4 class="media-heading" style="color: #223842;">Post Comment</h4>
+                        <a class="pull-left" href="javascript:void(0)"> <img class="media-object img-circle" ng-src="{{user.picture}}" width="64" height="64"> </a>
+                                                <div class="media-body" style="background-color: #e2e2e2">
+                            <p>
+                                <form name="postForm" ng-submit="addPost()">
+                                    <div class="form-group">
+                                        <textarea style="width: auto; height: 75px;" class="form-control" rows="3" name="title" ng-model="title" placeholder="Talk smack!" maxlength="250"> </textarea>
+                                        <span><p class="text-muted" style="color: #223842">*Comment can't exceed 250 characters</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-info">Submit</button>
+                                </form>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item" ng-repeat="post in contest.posts">
+                    <div class="media">
+                        <a class="pull-left" href="#"> <img class="media-object img-circle" ng-src="{{post.user.picture}}" width="64" height="64"> </a>
+                        <div class="media-body">
+                            <p>{{post.title}}</p>
+                            <ul class="list-inline" style="padding-bottom: 10px;">
+                                <li><p style="color: #2B2D42; margin: 0; font-size: 10px">Posted By: {{post.user.displayName}}</p>
+                                </li>
+                                <li><span style="color: #2B2D42; margin: 0;">{{post.upvotes}} </span><a href="" ng-click="incrementPostUpvotes(post)" data-toggle="tooltip" title="{{post.usersWhoUpvoted}}" data-placement="top"><i class="ion-thumbsup" style="color: #223842;"></i></a></li>
+                                <li>
+                                    <button type="button" ui-sref="contest.post({postId:post._id})" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#myModal">View/Add Comments: {{post.comments.length}}</button>
+                                </li>
+                                <li ng-show="showDeletePost(post)">
+                                    <button class="btn btn-xs btn-danger" ng-click="deletePost(post)" ui-sref="contest({id: contest._id})">Delete</button>
+                                </li>
+                            </ul>
+                            <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title"></h4> </div>
+                                        <div class="modal-body">
+                                            <div ui-view></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

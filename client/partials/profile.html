@@ -1,0 +1,159 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-clipboard"></i> My Profile</div>
+        <div class="panel-body">
+            <div ng-show="showUpdateProfile == false">
+                <div class="row">
+                <div class="col-sm-6">
+                    <ul class="list-group" style="box-shadow: 0 8px 17px rgba(0, 0, 0, .2); border-radius: 10%">
+                        <li class="list-group-item" style="background-color: #2B2D42">
+                            <img class="img-rounded center-block" ng-src="{{user.picture}}" width="75" height="75">
+                        </li>
+                        <li class="list-group-item text-center" style="background-color: #2B2D42;">
+                            <label class="controle-label" style="color: #fff; font-size:16px"><i class="ion-person"></i> Username:</label>
+                            <p style="color: #FFE939">{{user.displayName}}</p>
+                        </li>
+                        <li class="list-group-item text-center" style="background-color: #2B2D42;">
+                            <label class="controle-label" style="color: #fff; font-size:16px"><i class="ion-at"></i> Email Address:</label>
+                            <p style="color: #FFE939">{{user.email}}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <ul class="list-group" style="box-shadow: 0 8px 17px rgba(0, 0, 0, .2); border-radius: 10%">
+                      <li class="list-group-item text-center" style="background-color: #2B2D42;">
+                        <button class="button button--itzel button--text-thick center-block" ng-click="showUpdateProfile=true" style="color: #FFE939"><i class="button__icon icon ion-edit"></i><span>Edit Profile</span></button>
+                    </li>
+                      <li class="list-group-item text-center" style="background-color: #2B2D42;">
+                            <div ng-if="user.facebook">
+                                <button class="button button--itzel button--text-thick center-block" ng-click="unlink('facebook')" style="color: #ef473a"><i class="button__icon icon ion-social-facebook"></i><span>Unlink Facebook</span></button>
+                            </div>
+                            <div ng-if="!user.facebook">
+                                <button class="button button--itzel button--text-thick center-block" ng-click="link('facebook')" style="color: #3b5998;"><i class="button__icon icon ion-social-facebook"></i><span>Link Facebook</span></button>
+                            </div>
+                    </li>
+                      <li class="list-group-item text-center" style="background-color: #2B2D42;">
+                        <div ng-if="user.twitter">
+                            <button class="button button--itzel button--text-thick center-block" ng-click="unlink('twitter')" style="color: #ef473a"><i class="button__icon icon ion-social-twitter"></i><span>Unlink Twitter</span></button>
+                        </div>
+                        <div ng-if="!user.twitter">
+                            <button class="button button--itzel button--text-thick center-block" ng-click="link('twitter')" style="color: #00aced"><i class="button__icon icon ion-social-twitter"></i><span>Link Twitter</span></button>
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            <div ng-show="showUpdateProfile == true">
+                <form method="post" ng-submit="updateProfile()" name="editProfile">
+                    <div class="form-group">
+                        <label class="control-label">Profile Picture</label> <img class="profile-picture" ng-src="{{user.picture}}" width: "75" height="75"> </div>
+                    <div class="form-group">
+                        <label class="control-label" style="color: #FFE939"><i class="ion-person"></i> Username:</label>
+                        <input type="text" class="form-control" ng-model="user.displayName" /> </div>
+                    <div class="form-group">
+                        <label class="control-label" style="color: #FFE939"><i class="ion-at"></i> Email Address:</label>
+                        <input type="email" class="form-control" ng-model="user.email" />
+                    </div>
+                    <div class="form-group has-feedback" ng-class="{ 'has-error' : editProfile.password.$invalid && editProfile.password.$dirty }">
+                        <label class="control-label" style="color: #FFE939"><i class="ion-locked"></i> Password:</label>
+                        <input type="password" class="form-control" ng-model="user.password" required><span class="ion-key form-control-feedback"></span>
+                    </div>
+                    <ul class="list-inline">
+                        <li style="padding-left:2px; padding-right:5px;">
+                            <button type="submit" ng-disabled="editProfile.$invalid" class="btn btn-lg btn-success" ng-click="showUpdateProfile=false">Submit</button>
+                        </li>
+                </form>
+                        <li style="padding: 0">    
+                            <button class="btn btn-lg btn-danger" ng-click="showUpdateProfile=false">Cancel</button>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-trophy"></i> Awards</div>
+        <div class="panel-body">
+            <table class="center-table" style="width:90%; box-shadow: 0 8px 17px rgba(0, 0, 0, .2); border-radius: 10%; background-color: #2B2D42">
+                <tr>
+                    <td class="centre_image"> <img ng-src="/stylesheets/images/GoldCup.png" width="80" height="80">
+                        <h5>First Place Finishes:</h5><p style="color: #FFE939">{{user.timesFirstPlaceRanking}}</p></td>
+                    <td class="centre_image"> <img ng-src="/stylesheets/images/SilverCup.png" width="80" height="80">
+                        <h5>Second Place Finishes:</h5><p style="color: #FFE939">{{user.timesSecondPlaceRanking}}</p></td>
+                    <td class="centre_image"> <img ng-src="/stylesheets/images/BronzeCup.png" width="80" height="80">
+                        <h5>Third Place Finishes:</h5><p style="color: #FFE939">{{user.timesThirdPlaceRanking}}</p></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-stats-bars"></i> Pick Stats By League</div>
+        <div class="panel-body">
+				<div class="table-responsive">
+                    <table id="leaderboard">
+                        <tr>
+                            <th></th>
+                            <th>MLB</th>
+                            <th>NFL</th>
+                            <th>NBA</th>
+                            <th>NCAAF</th>
+                            <th>NCAAM</th>
+                        </tr>
+                        <tr>
+                            <td>Total Picks</td>
+                            <td>{{user.mlb.total}}</td>
+                            <td>{{user.nfl.total}}</td>
+                            <td>{{user.nba.total}}</td>
+                            <td>{{user.ncaaf.total}}</td>
+                            <td>{{user.ncaam.total}}</td>
+                        </tr>
+                        <tr>
+                            <td>Correct Picks</td>
+                            <td>{{user.mlb.correct}}</td>
+                            <td>{{user.nfl.correct}}</td>
+                            <td>{{user.nba.correct}}</td>
+                            <td>{{user.ncaaf.correct}}</td>
+                            <td>{{user.ncaam.correct}}</td>
+                        </tr>
+                        <tr>
+                            <td>Percentage Correct</td>
+                            <td>{{user.mlb.percentage}}%</td>
+                            <td>{{user.nfl.percentage}}%</td>
+                            <td>{{user.nba.percentage}}%</td>
+                            <td>{{user.ncaaf.percentage}}%</td>
+                            <td>{{user.ncaam.percentage}}%</td>
+                        </tr>
+                    </table>
+				</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-android-people"></i> Contest History</div>
+        <div class="panel-body">
+				<div class="table-responsive">
+                    <table id="leaderboard">
+                        <tr>
+                            <th>Contest ID</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Picks</th>
+                            <th>Participants</th>
+                            <th>Rank</th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="userPick in userPicks | orderBy:'-userPick.contest.id'">
+                            <td>{{userPick.contest.id}}</td>
+                            <td>{{userPick.contest.start | amDateFormat: 'dddd, MMMM Do, h:mm a'}}</td>
+                            <td>{{userPick.contest.end | amDateFormat: 'dddd, MMMM Do, h:mm a'}}</td>
+                            <td>{{userPick.selectedTeams}}</td>
+                            <td>{{userPick.contest.participants}}</td>
+                            <td>{{userPick.contestRank}}</td>
+                            <td>
+                                <button class="btn btn-warning" ui-sref="contest({id: userPick.contest._id})">View</button>
+                            </td>
+                        </tr>
+                    </table>
+				</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-trophy"></i> User Leaderboard</div>
+        <div class="panel-body">
+                <div class="col-xs-12">
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ion-search"></i>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Search" ng-model="searchLeaderboard"> </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table id="leaderboard">
+                            <tr>
+                                <th>
+                                    <a class="leaderboard" href="javascript:void(0)" ng-click="sortType = 'displayName'; sortReverse = !sortReverse"> <img ng-src="/stylesheets/images/king.png" width="50" height="50" />
+                                        <div class="text-center">Username<span ng-show="sortType == 'displayName' && !sortReverse" class="fa fa-caret-down"></span> <span ng-show="sortType == 'displayName' && sortReverse" class="fa fa-caret-up"></span> </a>
+                                </th>
+                                <th>
+                                    <a class="leaderboard" href="javascript:void(0)" ng-click="sortType = 'rank'; sortReverse = !sortReverse"> <img ng-src="/stylesheets/images/rank.png" width="50" height="50" />
+                                        <div class="text-center">Overall Rank</div> <span ng-show="sortType == 'rank' && !sortReverse" class="fa fa-caret-down"></span> <span ng-show="sortType == 'rank' && sortReverse" class="fa fa-caret-up"></span> </a>
+                                </th>
+                                <th>
+                                    <a class="leaderboard" href="javascript:void(0)" ng-click="sortType = 'timesFirstPlaceRanking'; sortReverse = !sortReverse"> <img ng-src="/stylesheets/images/GoldCup.png" width="50" height="50" style="padding-bottom:5px"/>
+                                        <div class="text-center">Gold Medals</div> <span ng-show="sortType == 'timesFirstPlaceRanking' && !sortReverse" class="fa fa-caret-down"></span> <span ng-show="sortType == 'timesFirstPlaceRanking' && sortReverse" class="fa fa-caret-up"></span> </a>
+                                </th>
+                                <th>
+                                    <a class="leaderboard" href="javascript:void(0)" ng-click="sortType = 'timesSecondPlaceRanking'; sortReverse = !sortReverse"> <img ng-src="/stylesheets/images/SilverCup.png" width="50" height="50" style="padding-bottom:5px"/>
+                                        <div class="text-center">Silver Medals</div> <span ng-show="sortType == 'timesSecondPlaceRanking' && !sortReverse" class="fa fa-caret-down"></span> <span ng-show="sortType == 'timesSecondPlaceRanking' && sortReverse" class="fa fa-caret-up"></span> </a>
+                                </th>
+                                <th>
+                                    <a class="leaderboard" href="javascript:void(0)" ng-click="sortType = 'timesThirdPlaceRanking'; sortReverse = !sortReverse"> <img ng-src="/stylesheets/images/BronzeCup.png" width="50" height="50" style="padding-bottom:5px"/>
+                                        <div class="text-center">Bronze Medals</div> <span ng-show="sortType == 'timesThirdPlaceRanking' && !sortReverse" class="fa fa-caret-down"></span> <span ng-show="sortType == 'timesThirdPlaceRanking' && sortReverse" class="fa fa-caret-up"></span> </a>
+                                </th>
+                                <th>
+                                    <a class="leaderboard" href="javascript:void(0)" ng-click="sortType = 'totalPoints'; sortReverse = !sortReverse"> <img ng-src="/stylesheets/images/totalpoints.png" width="50" height="50" />
+                                        <div class="text-center">Total Points</div> <span ng-show="sortType == 'totalPoints' && !sortReverse" class="fa fa-caret-down"></span> <span ng-show="sortType == 'totalPoints' && sortReverse" class="fa fa-caret-up"></span> </a>
+                                </th>
+                                <th></th>
+                            </tr>
+                            <tr dir-paginate="user in users | orderBy:sortType:sortReverse | filter: searchLeaderboard | itemsPerPage: 10">
+                                <td> <img class="img-circle" ng-src="{{user.picture}}" width="65" height="65">
+                                    <div class="text-center">{{user.displayName}}</div>
+                                </td>
+                                <td>{{user.rank}}</td>
+                                <td>{{user.timesFirstPlaceRanking}}</td>
+                                <td>{{user.timesSecondPlaceRanking}}</td>
+                                <td>{{user.timesThirdPlaceRanking}}</td>
+                                <td>{{user.totalPoints}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#myModal{{$index}}" aria-labelledby="myModalLabel">View more statistics</button>
+                                    <div id="myModal{{$index}}" class="modal fade" role="dialog" tabindex="-1">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title">{{user.displayName}}: Pick Stats by League</h4> </div>
+                                                <div class="modal-body">
+                                                    <table id="contestHistory">
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>MLB</th>
+                                                            <th>NFL</th>
+                                                            <th>NBA</th>
+                                                            <th>NCAAF</th>
+                                                            <th>NCAAM</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Picks</td>
+                                                            <td>{{user.mlb.total}}</td>
+                                                            <td>{{user.nfl.total}}</td>
+                                                            <td>{{user.nba.total}}</td>
+                                                            <td>{{user.ncaaf.total}}</td>
+                                                            <td>{{user.ncaam.total}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Correct Picks</td>
+                                                            <td>{{user.mlb.correct}}</td>
+                                                            <td>{{user.nfl.correct}}</td>
+                                                            <td>{{user.nba.correct}}</td>
+                                                            <td>{{user.ncaaf.correct}}</td>
+                                                            <td>{{user.ncaam.correct}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Percentage Correct</td>
+                                                            <td>{{user.mlb.percentage}}%</td>
+                                                            <td>{{user.nfl.percentage}}%</td>
+                                                            <td>{{user.nba.percentage}}%</td>
+                                                            <td>{{user.ncaaf.percentage}}%</td>
+                                                            <td>{{user.ncaam.percentage}}%</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-med btn-success" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="text-center">
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

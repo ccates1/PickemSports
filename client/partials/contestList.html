@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading"><i class="ion-ios-people"></i> Contest Lobby</div>
+        <div class="panel-body">
+
+                <div class="col-xs-12">
+                    <div ng-if="isAuthenticated()">
+                                            <div class="tabs-striped tabs-color-assertive2 tabs-icon-top" style="position: static; margin-bottom: 15px; background-color: #474747">
+                        <div class="tabs" style="position: static; background-color: #474747; border-bottom:0px">
+                            <a class="tab-item" data-ink-color="#ef473a" data-ink-opacity=".35" ng-hide="activeTag == 'all'" ng-click="setTag('all'); getTag('all');">
+                                <i class="icon ion-ios-flame-outline"></i>
+                                <strong>ALL</strong>
+                            </a>
+                            <a class="tab-item active" data-ink-color="#ef473a" data-ink-opacity=".35" ng-show="activeTag == 'all'" ng-click="setTag('all')">
+                                <i class="icon ion-ios-flame"></i>
+                                <strong>ALL</strong>
+                            </a>
+                            <a class="tab-item" data-ink-color="#ef473a" data-ink-opacity=".35" ng-hide="activeTag == 'NFL'" ng-click="setTag('NFL'); getTag('NFL');">
+                                <i class="icon ion-ios-americanfootball-outline"></i>
+                                <strong>NFL</strong>
+                            </a>
+                            <a class="tab-item active" data-ink-color="#ef473a" data-ink-opacity=".35" ng-show="activeTag == 'NFL'" ng-click="setTag('NFL')">
+                                <i class="icon ion-ios-americanfootball"></i>
+                                <strong>NFL</strong>
+                            </a>
+                            <a class="tab-item" id="active3" data-ink-color="#ef473a" data-ink-opacity=".35" ng-hide="activeTag == 'NBA'" ng-click="setTag('NBA'); getTag('NBA');">
+                                <i class="icon ion-ios-basketball-outline"></i>
+                                <strong>NBA</strong>
+                            </a>
+                            <a class="tab-item active" id="active3" data-ink-color="#ef473a" data-ink-opacity=".35" ng-show="activeTag == 'NBA'" ng-click="setTag('NBA')">
+                                <i class="icon ion-ios-basketball"></i>
+                                <strong>NBA</strong>
+                            </a>
+                            <a class="tab-item" id="active2" data-ink-color="#ef473a" data-ink-opacity=".35" ng-hide="activeTag == 'MLB'" ng-click="setTag('MLB'); getTag('MLB');">
+                                <i class="icon ion-ios-baseball-outline"></i>
+                                <strong>MLB</strong>
+                            </a>
+                            <a class="tab-item active" id="active2" data-ink-color="#ef473a" data-ink-opacity=".35" ng-show="activeTag == 'MLB'" ng-click="setTag('MLB')">
+                                <i class="icon ion-ios-baseball"></i>
+                                <strong>MLB</strong>
+                            </a>
+                            <a class="tab-item" data-ink-color="#ef473a" data-ink-opacity=".35" ng-hide="activeTag == 'NCAAF'" ng-click="setTag('NCAAF'); getTag('NCAAF');">
+                                <i class="icon ion-ios-americanfootball-outline"></i>
+                                <strong>NCAAF</strong>
+                            </a>
+                            <a class="tab-item active" data-ink-color="#ef473a" data-ink-opacity=".35" ng-show="activeTag == 'NCAAF'" ng-click="setTag('NCAAF')">
+                                <i class="icon ion-ios-americanfootball"></i>
+                                <strong>NCAAF</strong>
+                            </a>
+                            <a class="tab-item" data-ink-color="#ef473a" data-ink-opacity=".35" ng-hide="activeTag == 'NCAAM'" ng-click="setTag('NCAAM'); getTag('NCAAM');">
+                                <i class="icon ion-ios-basketball-outline"></i>
+                                <strong>NCAAM</strong>
+                            </a>
+                            <a class="tab-item active" data-ink-color="#ef473a" data-ink-opacity=".35" ng-show="activeTag == 'NCAAM'" ng-click="setTag('NCAAM')">
+                                <i class="icon ion-ios-basketball"></i>
+                                <strong>NCAAM</strong>
+                            </a>
+                        </div>
+                    </div>
+                        <br>
+                        <div class="table-responsive">
+                        <table id="leaderboard">
+                            <tr>
+                                <th>ID</th>
+                                <th>League(s) Included</th>
+                                <th>Number of Matchups</th>
+                                <th>Number of Participants</th>
+                                <th>Start Date</th>
+                                <th></th>
+                            </tr>
+                            <tr dir-paginate="contest in contests | FilterContests:selectedTag | itemsPerPage: 10">
+                                <td>{{contest.id}}</td>
+                                <td>{{contest.tags}}</td>
+                                <td>{{contest.numberOfMatchups}}</td>
+                                <td>{{contest.participants}}</td>
+                                <td>{{contest.start | amDateFormat: 'dddd, MMMM Do, h:mm a'}}</td>
+                                <td>
+                                    <button class="btn btn-warning" ui-sref="contest({id: contest._id})">View</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                        <div class="text-center">
+                            <dir-pagination-controls max-size="5" direction-links="true" boundary-links="true"></dir-pagination-controls>
+                        </div>
+                    </div>
+                    <div ng-if="!isAuthenticated()" class="text-center">
+                        <h3>You need to <a ui-sref="login">Login</a> or <a ui-sref="signup">Register</a> to participate in contests!</h3>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+</div>

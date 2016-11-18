@@ -1,0 +1,120 @@
+{
+  "id": 1,
+  "tags": "MLB",
+  "numberOfMatchups": 9,
+  "matchups": [
+    {
+      "matchupId": 1,
+      "homeTeam": "Red Sox",
+      "homeLogo": "stylesheets/mlblogos/BOS.jpg",
+      "awayTeam": "Rays",
+      "awayLogo": "stylesheets/mlblogos/TB.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "MLB"
+    },
+    {
+      "matchupId": 2,
+      "homeTeam": "Orioles",
+      "homeLogo": "stylesheets/mlblogos/BAL.jpg",
+      "awayTeam": "Angels",
+      "awayLogo": "stylesheets/mlblogos/LAA.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "NCAAF"
+    },
+    {
+      "matchupId": 3,
+      "homeTeam": "Indians",
+      "homeLogo": "stylesheets/mlblogos/CLE.jpg",
+      "awayTeam": "Yankees",
+      "awayLogo": "stylesheets/mlblogos/NYY.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "MLB"
+    },
+    {
+      "matchupId": 4,
+      "homeTeam": "Astros",
+      "homeLogo": "stylesheets/mlblogos/HOU.jpg",
+      "awayTeam": "Athletics",
+      "awayLogo": "stylesheets/mlblogos/OAK.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "MLB"
+    },
+    {
+      "matchupId": 5,
+      "homeTeam": "Dodgers",
+      "homeLogo": "stylesheets/mlblogos/LAD.jpg",
+      "awayTeam": "Padres",
+      "awayLogo": "stylesheets/mlblogos/SD.png",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "MLB"
+    },
+    {
+      "matchupId": 6,
+      "homeTeam": "Pirates",
+      "homeLogo": "stylesheets/mlblogos/PITT.png",
+      "awayTeam": "Cubs",
+      "awayLogo": "stylesheets/mlblogos/CHC.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "NBA"
+    },
+    {
+      "matchupId": 7,
+      "homeTeam": "Mets",
+      "homeLogo": "stylesheets/mlblogos/NYM.jpg",
+      "awayTeam": "Nationals",
+      "awayLogo": "stylesheets/mlblogos/WAS.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "NBA"
+    },
+    {
+      "matchupId": 8,
+      "homeTeam": "Rockies",
+      "homeLogo": "stylesheets/mlblogos/COL.jpg",
+      "awayTeam": "Phillies",
+      "awayLogo": "stylesheets/mlblogos/PHI.jpg",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "NBA"
+    },
+    {
+      "matchupId": 9,
+      "homeTeam": "Rangers",
+      "homeLogo": "stylesheets/mlblogos/TEX.jpg",
+      "awayTeam": "Twins",
+      "awayLogo": "stylesheets/mlblogos/MINN.png",
+      "selectedTeam": "",
+      "matchupWinner": "",
+      "percentPickedHome": 0.0,
+      "percentPickedAway": 0.0,
+      "matchupLeague": "NBA"
+    }
+  ],
+  "participants": 0,
+  "usersWhoJoined": [],
+  "start": "2016-09-14T14:00:00-05:00",
+  "end": "2016-09-14T14:05:00-05:00",
+  "isChecked": false
+}

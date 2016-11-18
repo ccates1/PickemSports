@@ -1,0 +1,118 @@
+<div class="container">
+    <div class="panel panel-default">
+                    <div class="panel-heading"><i class="ion-home"></i> Home</div>
+        <div ng-if="isAuthenticated()">
+            <div class="panel-body">
+                <div class="Row">
+                    <div class="col-sm-2">
+                        <div class="thumbnail" style="margin-top: 20px">
+                            <img src="{{user.picture}}" width="79" height="79">
+                            <caption>
+                                <h3 style="color: #223842; font-size: 10px">Current User:</h3>
+                                <p style="color: #223842">{{user.displayName}}</p>
+                            </caption>
+                        </div>
+                    </div>
+                    <div class="col-sm-5" style="height: 201px">
+                        <h4><i class="ion-ios-americanfootball"></i> Welcome to Pick'em Sports</h4> <strong>We provide a web platform in order for users to compete amongst others in choosing the highest amount of winners in a particular set of matchups. Click below to view your account profile.</strong>  
+                    </div>
+                    <div class="col-sm-5" style="height: 201px">
+                        <h4><i class="ion-ios-people"></i> Contest Lobby & Matchups</h4> <strong>Contests are created with a variety of leagues and some with single leagues. The number of games differ from each contest, but the level of excitement is always exceptionally high! Get with it and join in on the fun!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!isAuthenticated()">
+            <div class="panel-body">
+                <div class="row" style="text-align:center">
+                    <div class="col-sm-6">
+                        <h3 style="color: #FFE939"><i class="ion-ios-americanfootball"></i> Welcome to Pick'em Sports</h2> <strong>We provide a web platform in order for users to compete amongst others in choosing the highest amount of winners in a particular set of matchups. If you would like to link any social accounts, view, or edit your profile click below.</strong>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 style="color: #FFE939"><i class="ion-ios-people"></i> Contest Lobby & Matchups</h2> <strong>Contests are created with a variety of leagues and some with single leagues. The number of games differ from each contest, but the level of excitement is always exceptionally high! Get with it and join in on the fun!</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="!isAuthenticated()">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="text-center">
+                    <p><a ui-sref="login">Login</a> or <a ui-sref="signup">Register</a> to get in on the action!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="isAuthenticated()">
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="ion-link"></i> Linked Social Accounts</div>
+            <div class="panel-body">
+                <div class="col-xs-12">
+                <ul class="list-inline">
+                    <li>
+                                                    <div ng-if="user.facebook">
+                                <button class="button button--itzel button--text-thick" ng-click="unlink('facebook')" style="color: #ef473a"><i class="button__icon icon ion-social-facebook"></i><span>Unlink Facebook</span></button>
+                            </div>
+                            <div ng-if="!user.facebook">
+                                <button class="button button--itzel button--text-thick center-block" ng-click="link('facebook')" style="color: #3b5998"><i class="button__icon icon ion-social-facebook"></i><span>Link Facebook</span></button>
+                            </div>
+                        </li>
+                        <li>
+                                                    <div ng-if="user.twitter">
+                            <button class="button button--itzel button--text-thick center-block" ng-click="unlink('twitter')" style="color: #ef473a"><i class="button__icon icon ion-social-twitter"></i><span>Unlink Twitter</span></button>
+                        </div>
+                        <div ng-if="!user.twitter">
+                            <button class="button button--itzel button--text-thick center-block" ng-click="link('twitter')" style="color: #00aced"><i class="button__icon icon ion-social-twitter"></i><span>Link Twitter</span></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="isAuthenticated()">
+        <div class="panel panel-default">
+            <div class="panel-heading"><i class="ion-star"></i> Overall Top Five Users</div>
+            <div class="panel-body">
+                        <div class="table-responsive">
+                            <table id="leaderboard">
+                                <tr>
+                                    <th> <img ng-src="/stylesheets/images/king.png" width="50" height="50" /></img>
+                                        <div class="text-center">Username</div>
+                                    </th>
+                                    <th> <img ng-src="/stylesheets/images/rank.png" width="50" height="50" />
+                                        <div class="text-center">Overall Rank</div>
+                                    </th>
+                                    <th> <img ng-src="/stylesheets/images/GoldCup.png" width="50" height="50" style="padding-bottom:5px"/>
+                                        <div class="text-center">Gold Medals</div>
+                                    </th>
+                                    <th> <img ng-src="/stylesheets/images/SilverCup.png" width="50" height="50" style="padding-bottom:5px"/>
+                                        <div class="text-center">Silver Medals</div>
+                                    </th>
+                                    <th> <img ng-src="/stylesheets/images/BronzeCup.png" width="50" height="50" style="padding-bottom:5px"/>
+                                        <div class="text-center">Bronze Medals</div>
+                                    </th>
+                                    <th> <img ng-src="/stylesheets/images/totalpoints.png" width="50" height="50" />
+                                        <div class="text-center">Total Points</div>
+                                    </th>
+                                </tr>
+                                <tr ng-repeat="user in topUsers">
+                                    <td>{{user.displayName}}</td>
+                                    <td>{{user.rank}}</td>
+                                    <td>{{user.timesFirstPlaceRanking}}</td>
+                                    <td>{{user.timesSecondPlaceRanking}}</td>
+                                    <td>{{user.timesThirdPlaceRanking}}</td>
+                                    <td>{{user.totalPoints}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                          <button class="btn btn-lg btn-success" id="buttonLeaderboard" ng-click="click()">View Leaderboard</button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

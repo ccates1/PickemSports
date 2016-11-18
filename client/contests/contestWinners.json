@@ -1,0 +1,28 @@
+{
+  "contests":[
+    {
+    "id": 1,
+      "winners": [
+        "Red Sox", "Orioles", "Indians", "Astros", "Dodgers", "Pirates", "Mets", "Rockies", "Rangers"
+      ]
+    },
+        {
+    "id": 2,
+      "winners": [
+        "Red Sox", "Orioles", "Indians", "Astros", "Dodgers", "Pirates", "Mets", "Rockies", "Rangers"
+      ]
+    },
+        {
+    "id": 3,
+      "winners": [
+        "Red Sox", "Orioles", "Indians", "Astros", "Dodgers", "Pirates", "Mets", "Rockies", "Rangers"
+      ]
+    },
+        {
+    "id": 4,
+      "winners": [
+        "Red Sox", "Orioles", "Indians", "Astros", "Dodgers", "Pirates", "Mets", "Rockies", "Rangers"
+      ]
+    }
+  ]
+}

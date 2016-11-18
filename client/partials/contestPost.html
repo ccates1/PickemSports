@@ -1,0 +1,50 @@
+<ul class="list-group">
+    <li class="list-group-item" style="border-bottom: 3px solid #223842">
+        <div class="media">
+            <a class="pull-left" href="#"> <img class="media-object img-circle" ng-src="{{post.user.picture}}" width="64" height="64"> </a>
+                        <div class="media-body">
+                            <p>{{post.title}}</p>
+                            <ul class="list-inline" style="padding-bottom: 10px;">
+                                <li><p style="color: #2B2D42; font-size: 10px">Posted By: {{post.user.displayName}}</p>
+                                </li>
+                                <li><span style="color: #2B2D42; margin: 0;">{{post.upvotes}} </span><a href="" ng-click="incrementPostUpvotes(post)" data-toggle="tooltip" title="{{post.usersWhoUpvoted}}" data-placement="top"><i class="ion-thumbsup" style="color: #223842;"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+    <li class="list-group-item">
+                        <h4 class="media-heading" style="color: #223842;">Reply to Comment</h4>
+                <p>
+        <div class="media">
+            <a class="pull-left" href="javascript:void(0)"> <img class="media-object img-circle" ng-src="{{user.picture}}" width="64" height="64"> </a>
+            <div class="media-body" style="background-color: #e5e5e5">
+                    <form name="postForm" ng-submit="addComment()">
+                        <div class="form-group">
+                            <textarea style="width: auto; height: 75px;" class="form-control" rows="3" name="message" ng-model="message" placeholder="Talk smack!" maxlength="250"> </textarea>
+                        </div>
+                        <span><p class="text-muted" style="color: #223842">*Comment can't exceed 250 characters</span>
+                        <button type="submit" class="btn btn-sm btn-info">Submit</button>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item" ng-repeat="comment in post.comments | orderBy: '-upvotes'">
+        <div class="media">
+            <a class="pull-left" href="#"> <img class="media-object img-circle" ng-src="{{comment.user.picture}}" width="64" height="64"> </a>
+            <div class="media-body">
+                <p>{{comment.message}}</p>
+                <ul class="list-inline" style="padding-bottom: 10px;">
+                    <li> 
+                        <p style="color: #2B2D42; margin: 0; font-size: 10px">Posted By: {{comment.user.displayName}}</p>
+                    </li>
+                    <li><span style="color: #2B2D42; margin: 0;">{{comment.upvotes}} </span><a href="" ng-click="incrementPostUpvotes(comment)" data-toggle="tooltip" title="{{comment.usersWhoUpvoted}}" data-placement="top"><i class="ion-thumbsup" style="color: #223842;"></i></a></li>
+                    <li ng-show="showDeleteComment(comment)">
+                        <button class="btn btn-xs btn-danger" ui-sref="contest({id: contest._id})" ng-click="deleteComment(comment)">Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+</ul>
