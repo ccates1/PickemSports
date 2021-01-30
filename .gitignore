@@ -1,4 +1,2 @@
-node_modules/
-config.js
 **/.DS_Store
-/server.js
+node_modules/
